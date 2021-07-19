@@ -2,9 +2,9 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="jsonPlaceHolder" parallel="tests" thread-count="1">
     <test name="jsonPlaceHolder">
-        <parameter name="status201" value="201"></parameter>
         <classes>
             <class name="jsonPlaceHolder.tests.PostsTests"/>
+            <class name="jsonPlaceHolder.tests.UsersTests"/>
         </classes>
     </test>
 </suite>
