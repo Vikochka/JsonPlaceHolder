@@ -32,4 +32,15 @@ public class BaseAdapter {
                         extract().body().asString();
         return string;
     }
+
+    public String get(String uri,int id, int status) {
+        String string = given().
+                header("Content-type", "application/json")
+                .get(propertyReader.getProperty("URL") + uri + id)
+                .then().
+                        log().all().
+                        statusCode(status).
+                        extract().body().asString();
+        return string;
+    }
 }

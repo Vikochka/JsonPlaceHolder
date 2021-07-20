@@ -1,6 +1,7 @@
 package jsonPlaceHolder.tests;
 
 import com.github.javafaker.Faker;
+import io.qameta.allure.Description;
 import io.qameta.allure.Step;
 import jsonPlaceHolder.adapters.PostsAdapter;
 import jsonPlaceHolder.modals.PostsModal;
@@ -11,29 +12,29 @@ import static framework.PropertyReader.getProperty;
 
 public class PostsTests {
 
-    @Step("Get all posts")
+    @Step
     @Test
     public void getAllPosts() {
-        new PostsAdapter().getPost(getProperty("END_URI_POSTS"), getIntProperty("status200"));
+        new PostsAdapter().getPosts(getProperty("END_URI_POSTS"), getIntProperty("status200"));
     }
 
-    @Step("Get only one post")
+    @Step
     @Test
     public void getOnlyOnePost() {
-        new PostsAdapter().getPost(getProperty("END_URI_POSTS") + "99", getIntProperty("status200"));
+        new PostsAdapter().getPost(getProperty("END_URI_POSTS"), getIntProperty("id"));
     }
 
-    @Step("Get error post")
+    @Step
     @Test
+    @Description("Get {error.id} post")
     public void getErrorPost() {
-        new PostsAdapter().getPost(getProperty("END_URI_POSTS") + "150", getIntProperty("status404"));
+        new PostsAdapter().getPost(getProperty("END_URI_POSTS"), getIntProperty("error.id"));
     }
 
     @Step("Add new post")
     @Test
     public void createNewPost() {
         Faker faker = new Faker();
-
         PostsModal postsModal = PostsModal.builder()
                 .userId(1)
                 .id(101)

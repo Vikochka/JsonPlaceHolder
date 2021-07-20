@@ -1,5 +1,6 @@
 package jsonPlaceHolder.modals;
 
+import com.google.gson.annotations.SerializedName;
 import lombok.Builder;
 import lombok.Data;
 
@@ -13,11 +14,13 @@ public class UsersModal {
     String street;
     String suite;
     String city;
-    int zipcode;
+    String  zipcode;
     double lat;
     double lng;
     String phone;
     String website;
+    @SerializedName("name")
+            String companyName;
     String catchPhrase;
     String bs;
 }
