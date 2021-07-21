@@ -35,7 +35,7 @@ public class BaseAdapter {
                 header("Content-type", "application/json")
                 .get(propertyReader.getProperty("URL") + uri)
                 .then().
-                        log().ifValidationFails().
+                        log().all().
                         statusCode(status).
                         and().
                         contentType(ContentType.JSON).

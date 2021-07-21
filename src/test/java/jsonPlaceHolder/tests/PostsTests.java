@@ -29,7 +29,7 @@ public class PostsTests {
     @SneakyThrows
     @Test
     public void getErrorPost() {
-        getBytesAnnotationWithArgs("expectedResults/post.json");
+        getBytesAnnotationWithArgs("expectedResults/error_post.json");
         new PostsAdapter().getPost(getProperty("END_URI_POSTS"), getIntProperty("error.id"), getIntProperty("status404"));
     }
 
