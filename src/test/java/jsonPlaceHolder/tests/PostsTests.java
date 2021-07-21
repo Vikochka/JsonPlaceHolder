@@ -1,37 +1,38 @@
 package jsonPlaceHolder.tests;
 
 import com.github.javafaker.Faker;
-import io.qameta.allure.Description;
-import io.qameta.allure.Step;
 import jsonPlaceHolder.adapters.PostsAdapter;
 import jsonPlaceHolder.modals.PostsModal;
+import lombok.SneakyThrows;
 import org.testng.annotations.Test;
 
+import static framework.BaseAdapter.getBytesAnnotationWithArgs;
 import static framework.PropertyReader.getIntProperty;
 import static framework.PropertyReader.getProperty;
 
 public class PostsTests {
 
-    @Step
+    @SneakyThrows
     @Test
     public void getAllPosts() {
+        getBytesAnnotationWithArgs("expectedResults/posts.json");
         new PostsAdapter().getPosts(getProperty("END_URI_POSTS"), getIntProperty("status200"));
     }
 
-    @Step
+    @SneakyThrows
     @Test
     public void getOnlyOnePost() {
-        new PostsAdapter().getPost(getProperty("END_URI_POSTS"), getIntProperty("id"));
+        getBytesAnnotationWithArgs("expectedResults/post.json");
+        new PostsAdapter().getPost(getProperty("END_URI_POSTS"), getIntProperty("id"), getIntProperty("status200"));
     }
 
-    @Step
+    @SneakyThrows
     @Test
-    @Description("Get {error.id} post")
     public void getErrorPost() {
-        new PostsAdapter().getPost(getProperty("END_URI_POSTS"), getIntProperty("error.id"));
+        getBytesAnnotationWithArgs("expectedResults/post.json");
+        new PostsAdapter().getPost(getProperty("END_URI_POSTS"), getIntProperty("error.id"), getIntProperty("status404"));
     }
 
-    @Step("Add new post")
     @Test
     public void createNewPost() {
         Faker faker = new Faker();

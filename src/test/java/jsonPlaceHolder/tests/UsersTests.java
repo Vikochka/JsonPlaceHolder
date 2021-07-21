@@ -1,23 +1,26 @@
 package jsonPlaceHolder.tests;
 
-import io.qameta.allure.Step;
 import jsonPlaceHolder.adapters.UsersAdapter;
+import lombok.SneakyThrows;
 import org.testng.annotations.Test;
 
+import static framework.BaseAdapter.getBytesAnnotationWithArgs;
 import static framework.PropertyReader.getIntProperty;
 import static framework.PropertyReader.getProperty;
 
 public class UsersTests {
 
-    @Step("Get all users")
+    @SneakyThrows
     @Test
     public void getAllUsers() {
-        new UsersAdapter().getUsers(getProperty("END.URI.USERS"),getIntProperty("status200"),getIntProperty("id"));
+        getBytesAnnotationWithArgs("expectedResults/users.json");
+        new UsersAdapter().getUsers(getProperty("END.URI.USERS"), getIntProperty("status200"), getIntProperty("id"));
     }
 
-    @Step("Get only one user")
+    @SneakyThrows
     @Test
     public void getOnlyOneUser() {
-        new UsersAdapter().getUser(getProperty("END.URI.USERS") ,getIntProperty("id"),getIntProperty("status200"));
+        getBytesAnnotationWithArgs("expectedResults/user.json");
+        new UsersAdapter().getUser(getProperty("END.URI.USERS"), getIntProperty("id"), getIntProperty("status200"));
     }
 }

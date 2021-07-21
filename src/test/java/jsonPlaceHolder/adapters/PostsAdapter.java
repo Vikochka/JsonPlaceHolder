@@ -4,8 +4,13 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import framework.BaseAdapter;
 import framework.PropertyReader;
+import io.qameta.allure.Allure;
+import io.qameta.allure.Step;
 import jsonPlaceHolder.modals.PostsModal;
+import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
+
+import java.io.IOException;
 
 import static com.google.gson.JsonParser.parseString;
 import static framework.PropertyReader.getIntProperty;
@@ -15,7 +20,7 @@ public class PostsAdapter extends BaseAdapter {
     private int count;
     int id;
     PropertyReader propertyReader = new PropertyReader("posts.properties");
-
+    @Step("Create new post")
     public JsonObject postPost(PostsModal postsModal, String uri, int status) {
         String response = post(gson.toJson(postsModal), uri, status);
         JsonObject jsonObject = parseString(response)
@@ -43,10 +48,13 @@ public class PostsAdapter extends BaseAdapter {
         } else {
             log.info("Title, body, userId does not corresponds to those passed in the request, id is present in the response.");
         }
+        Allure.addAttachment("Actual result", response);
         return jsonObject;
     }
 
-    public int getPosts(String endUri, int status) {
+    @SneakyThrows
+    @Step("Get all posts")
+    public JsonArray getPosts(String endUri, int status) {
         String response = get(endUri, status);
         JsonArray jsonArray = (JsonArray) jsonParser.parse(response);
         log.info("Number of posts = " + jsonArray.size());
@@ -54,15 +62,16 @@ public class PostsAdapter extends BaseAdapter {
             JsonObject jsonObject = (JsonObject) jsonArray.get(i);
             id = jsonObject.get("id").getAsInt();
             if (id - i == 1) {
-                return id;
             } else {
-                log.info("Post can not be found " + getIntProperty("status404"));
+                log.error("Post can not be found " + getIntProperty("status404"));
             }
         }
-        return count = jsonArray.size();
+        Allure.addAttachment("Actual result", response);
+        return jsonArray;
     }
 
-    public void getPost(String endUri, int id) {
+    @Step("Get one post")
+    public void getPost(String endUri, int id,int status) {
         String response2 = get(endUri, getIntProperty("status200"));
         JsonArray jsonArray = (JsonArray) jsonParser.parse(response2);
         count = jsonArray.size();
@@ -106,5 +115,6 @@ public class PostsAdapter extends BaseAdapter {
             }
             log.info("Post can not be found");
         }
+            Allure.addAttachment("Actual result", get(endUri, id, status));
     }
 }

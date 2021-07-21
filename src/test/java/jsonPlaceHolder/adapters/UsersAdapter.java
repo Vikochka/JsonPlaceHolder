@@ -4,6 +4,8 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import framework.BaseAdapter;
 import framework.PropertyReader;
+import io.qameta.allure.Allure;
+import io.qameta.allure.Step;
 import lombok.extern.log4j.Log4j2;
 
 import static com.google.gson.JsonParser.parseString;
@@ -14,6 +16,7 @@ public class UsersAdapter extends BaseAdapter {
     PropertyReader property = new PropertyReader("users.properties");
     int count;
 
+    @Step("Get all users")
     public int getUsers(String endUri, int status, int id) {
         String response = get(endUri, status);
         JsonArray jsonArray = (JsonArray) jsonParser.parse(response);
@@ -125,9 +128,11 @@ public class UsersAdapter extends BaseAdapter {
         } else {
             log.error("Catch phrases are not equal");
         }
+        Allure.addAttachment("Actual result", response);
         return count;
     }
 
+    @Step("Get only one user")
     public void getUser(String endUri, int id, int status) {
         String response2 = get(endUri, status);
         JsonArray jsonArray = (JsonArray) jsonParser.parse(response2);
@@ -245,5 +250,6 @@ public class UsersAdapter extends BaseAdapter {
             String response = get(endUri, id, getIntProperty("status404"));
             log.info("User can not be found");
         }
+        Allure.addAttachment("Actual result", get(endUri, id, status));
     }
 }
