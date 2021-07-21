@@ -6,6 +6,7 @@ import jsonPlaceHolder.modals.PostsModal;
 import lombok.SneakyThrows;
 import org.testng.annotations.Test;
 
+import static framework.BaseAdapter.getBytes;
 import static framework.BaseAdapter.getBytesAnnotationWithArgs;
 import static framework.PropertyReader.getIntProperty;
 import static framework.PropertyReader.getProperty;
@@ -33,8 +34,10 @@ public class PostsTests {
         new PostsAdapter().getPost(getProperty("END_URI_POSTS"), getIntProperty("error.id"), getIntProperty("status404"));
     }
 
+    @SneakyThrows
     @Test
     public void createNewPost() {
+        getBytes("expectedResults/img.png");
         Faker faker = new Faker();
         PostsModal postsModal = PostsModal.builder()
                 .userId(1)

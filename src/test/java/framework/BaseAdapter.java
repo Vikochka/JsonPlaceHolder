@@ -60,4 +60,9 @@ public class BaseAdapter {
     public static byte[] getBytesAnnotationWithArgs(String resourceName) throws IOException {
         return Files.readAllBytes(Paths.get("src/test/resources", resourceName));
     }
+
+    @Attachment(value = "Expected result")
+    public static byte[] getBytes(String resourceName) throws IOException {
+        return Files.readAllBytes(Paths.get("src/test/resources", resourceName));
+    }
 }
