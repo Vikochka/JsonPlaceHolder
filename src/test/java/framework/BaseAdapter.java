@@ -32,27 +32,27 @@ public class BaseAdapter {
 
     public String get(String uri, int status) {
         String string = given().
-                header("Content-type", "application/json")
-                .get(propertyReader.getProperty("URL") + uri)
-                .then().
-                        log().all().
-                        statusCode(status).
-                        and().
-                        contentType(ContentType.JSON).
-                        extract().body().asString();
+                header("Content-type", "application/json").
+                get(propertyReader.getProperty("URL") + uri).
+                then().
+                log().all().
+                statusCode(status).
+                and().
+                contentType(ContentType.JSON).
+                extract().body().asString();
         return string;
     }
 
     public String get(String uri, int id, int status) {
         String string = given().
-                header("Content-type", "application/json")
-                .get(propertyReader.getProperty("URL") + uri + id)
-                .then().
-                        log().all().
-                        statusCode(status).
-                        and().
-                        contentType(ContentType.JSON).
-                        extract().body().asString();
+                header("Content-type", "application/json").
+                get(propertyReader.getProperty("URL") + uri + id).
+                then().
+                log().all().
+                statusCode(status).
+                and().
+                contentType(ContentType.JSON).
+                extract().body().asString();
         return string;
     }
 
