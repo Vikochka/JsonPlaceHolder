@@ -9,18 +9,19 @@ import lombok.Data;
 public class UsersModal {
     int id;
     String name;
-    String username;
+    @SerializedName("username")
+    String userName;
     String email;
     String street;
     String suite;
     String city;
-    String  zipcode;
-    double lat;
-    double lng;
+    String zipcode;
+    String lat;
+    String lng;
     String phone;
     String website;
     @SerializedName("name")
-            String companyName;
+    String companyName;
     String catchPhrase;
     String bs;
 }

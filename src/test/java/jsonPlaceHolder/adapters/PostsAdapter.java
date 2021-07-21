@@ -18,22 +18,16 @@ public class PostsAdapter extends BaseAdapter {
 
     public JsonObject postPost(PostsModal postsModal, String uri, int status) {
         String response = post(gson.toJson(postsModal), uri, status);
-
         JsonObject jsonObject = parseString(response)
                 .getAsJsonObject();
-
         int userId = parseString(response)
                 .getAsJsonObject().get("userId").getAsInt();
-
         int id = parseString(response)
                 .getAsJsonObject().get("id").getAsInt();
-
         String title = parseString(response)
                 .getAsJsonObject().get("title").getAsString();
-
         String body = parseString(response)
                 .getAsJsonObject().get("body").getAsString();
-
         if (userId == postsModal.getUserId()) {
             log.info("UserId corresponds to those passed in the request, userId = " + userId);
             if (id == postsModal.getId()) {
@@ -69,9 +63,9 @@ public class PostsAdapter extends BaseAdapter {
     }
 
     public void getPost(String endUri, int id) {
-        //String response2 = get(endUri, 200);
-        //JsonArray jsonArray = (JsonArray) jsonParser.parse(response2);
-        count = 100;// jsonArray.size();
+        String response2 = get(endUri, getIntProperty("status200"));
+        JsonArray jsonArray = (JsonArray) jsonParser.parse(response2);
+        count = jsonArray.size();
         if (count >= id) {
             String response = get(endUri, id, getIntProperty("status200"));
             int userId = parseString(response)

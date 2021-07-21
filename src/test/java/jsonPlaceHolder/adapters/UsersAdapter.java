@@ -3,7 +3,7 @@ package jsonPlaceHolder.adapters;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import framework.BaseAdapter;
-import jsonPlaceHolder.modals.UsersModal;
+import framework.PropertyReader;
 import lombok.extern.log4j.Log4j2;
 
 import static com.google.gson.JsonParser.parseString;
@@ -11,12 +11,13 @@ import static framework.PropertyReader.getIntProperty;
 
 @Log4j2
 public class UsersAdapter extends BaseAdapter {
+    PropertyReader property = new PropertyReader("users.properties");
     int count;
 
-    public int getUsers(String endUri, int status, int id, UsersModal usersModal) {
+    public int getUsers(String endUri, int status, int id) {
         String response = get(endUri, status);
         JsonArray jsonArray = (JsonArray) jsonParser.parse(response);
-        JsonObject jsonObject = (JsonObject) jsonArray.get(id-1);
+        JsonObject jsonObject = (JsonObject) jsonArray.get(id - 1);
         log.info("Number of users = " + jsonArray.size());
         int idOfUser = parseString(String.valueOf(jsonObject))
                 .getAsJsonObject().get("id").getAsInt();
@@ -34,10 +35,10 @@ public class UsersAdapter extends BaseAdapter {
                 .getAsJsonObject("address").get("city").getAsString();
         String zipcode = parseString(String.valueOf(jsonObject)).getAsJsonObject()
                 .getAsJsonObject("address").get("zipcode").getAsString();
-        double lat = parseString(String.valueOf(jsonObject)).getAsJsonObject().getAsJsonObject("address")
-                .getAsJsonObject("geo").get("lat").getAsDouble();
-        double lng = parseString(String.valueOf(jsonObject)).getAsJsonObject().getAsJsonObject("address")
-                .getAsJsonObject("geo").get("lng").getAsDouble();
+        String lat = parseString(String.valueOf(jsonObject)).getAsJsonObject().getAsJsonObject("address")
+                .getAsJsonObject("geo").get("lat").getAsString();
+        String lng = parseString(String.valueOf(jsonObject)).getAsJsonObject().getAsJsonObject("address")
+                .getAsJsonObject("geo").get("lng").getAsString();
         String phone = parseString(String.valueOf(jsonObject))
                 .getAsJsonObject().get("phone").getAsString();
         String website = parseString(String.valueOf(jsonObject))
@@ -48,90 +49,89 @@ public class UsersAdapter extends BaseAdapter {
                 .getAsJsonObject("company").get("catchPhrase").getAsString();
         String bs = parseString(String.valueOf(jsonObject)).getAsJsonObject()
                 .getAsJsonObject("company").get("bs").getAsString();
-        if (idOfUser == usersModal.getId()) {
+        if (idOfUser == property.getIntProperty("id")) {
             log.info("Ids are equal");
         } else {
-            log.info("Ids are not equal");
+            log.error("Ids are not equal");
         }
-        if (name.equals(usersModal.getName())) {
+        if (name.equals(property.getProperty("name"))) {
             log.info("Names are equal");
         } else {
-            log.info("Names are not equal");
+            log.error("Names are not equal");
         }
-        if (username.equals(usersModal.getUsername())) {
+        if (username.equals(property.getProperty("username"))) {
             log.info("User names are equal");
         } else {
-            log.info("User names are not equal");
+            log.error("User names are not equal");
         }
-        if (email.equals(usersModal.getEmail())) {
+        if (email.equals(property.getProperty("email"))) {
             log.info("Emails are equal");
         } else {
-            log.info("Emails are not equal");
+            log.error("Emails are not equal");
         }
-        if (street.equals(usersModal.getStreet())) {
+        if (street.equals(property.getProperty("street"))) {
             log.info("Streets are equal");
         } else {
-            log.info("Streets are not equal");
+            log.error("Streets are not equal");
         }
-        if (suite.equals(usersModal.getSuite())) {
+        if (suite.equals(property.getProperty("suite"))) {
             log.info("Suits are equal");
         } else {
-            log.info("Suits are not equal");
+            log.error("Suits are not equal");
         }
-        if (city.equals(usersModal.getCity())) {
+        if (city.equals(property.getProperty("city"))) {
             log.info("Cities are equal");
         } else {
-            log.info("Cities are not equal");
+            log.error("Cities are not equal");
         }
-        if (zipcode.equals(usersModal.getZipcode())) {
+        if (zipcode.equals(property.getProperty("zipcode"))) {
             log.info("Zipcodes are equal");
         } else {
-            log.info("Zipcodes are not equal");
+            log.error("Zipcodes are not equal");
         }
-        if (lat == usersModal.getLat()) {
+        if (lat.equals(property.getProperty("lat"))) {
             log.info("Latitude is equal");
         } else {
-            log.info("Latitude is not equal");
+            log.error("Latitude is not equal");
         }
-        if (lng == usersModal.getLng()) {
+        if (lng.equals(property.getProperty("lng"))) {
             log.info("Longitude is equal");
         } else {
-            log.info("Longitude is not equal");
+            log.error("Longitude is not equal");
         }
-        if (phone.equals(usersModal.getPhone())) {
+        if (phone.equals(property.getProperty("phone"))) {
             log.info("Phones are equal");
         } else {
-            log.info("Phones are not equal");
+            log.error("Phones are not equal");
         }
-        if (website.equals(usersModal.getWebsite())) {
+        if (website.equals(property.getProperty("website"))) {
             log.info("Websites are equal");
         } else {
-            log.info("Websites are not equal");
+            log.error("Websites are not equal");
         }
-        if (companyName.equals(usersModal.getCompanyName())) {
+        if (companyName.equals(property.getProperty("companyName"))) {
 
             log.info("Company names are equal");
         } else {
-            log.info("Company names are not equal");
+            log.error("Company names are not equal");
         }
-        if (catchPhrase.equals(usersModal.getCatchPhrase())) {
+        if (catchPhrase.equals(property.getProperty("catchPhrase"))) {
             log.info("Catch phrases are equal");
         } else {
-            log.info("Catch phrases are not equal");
+            log.error("Catch phrases are not equal");
         }
-        if (bs.equals(usersModal.getBs())) {
+        if (bs.equals(property.getProperty("bs"))) {
             log.info("Bs are equal");
         } else {
-            log.info("Catch phrases are not equal");
+            log.error("Catch phrases are not equal");
         }
         return count;
     }
 
-
-    public void getUser(String endUri, int id, int status, UsersModal usersModal) {
-        //  String response2 = get(endUri, status);
-        //JsonArray jsonArray = (JsonArray) jsonParser.parse(response2);
-        count = 10;// jsonArray.size();
+    public void getUser(String endUri, int id, int status) {
+        String response2 = get(endUri, status);
+        JsonArray jsonArray = (JsonArray) jsonParser.parse(response2);
+        count = jsonArray.size();
         if (count > id) {
             String response = get(endUri, id, getIntProperty("status200"));
             id = parseString(response)
@@ -150,10 +150,10 @@ public class UsersAdapter extends BaseAdapter {
                     .getAsJsonObject("address").get("city").getAsString();
             String zipcode = parseString(response).getAsJsonObject()
                     .getAsJsonObject("address").get("zipcode").getAsString();
-            double lat = parseString(response).getAsJsonObject().getAsJsonObject("address")
-                    .getAsJsonObject("geo").get("lat").getAsDouble();
-            double lng = parseString(response).getAsJsonObject().getAsJsonObject("address")
-                    .getAsJsonObject("geo").get("lng").getAsDouble();
+            String lat = parseString(response).getAsJsonObject().getAsJsonObject("address")
+                    .getAsJsonObject("geo").get("lat").getAsString();
+            String lng = parseString(response).getAsJsonObject().getAsJsonObject("address")
+                    .getAsJsonObject("geo").get("lng").getAsString();
             String phone = parseString(response)
                     .getAsJsonObject().get("phone").getAsString();
             String website = parseString(response)
@@ -164,81 +164,82 @@ public class UsersAdapter extends BaseAdapter {
                     .getAsJsonObject("company").get("catchPhrase").getAsString();
             String bs = parseString(response).getAsJsonObject()
                     .getAsJsonObject("company").get("bs").getAsString();
-            if (id == usersModal.getId()) {
+            if (id == property.getIntProperty("id")) {
                 log.info("Ids are equal");
             } else {
-                log.info("Ids are not equal");
+                log.error("Ids are not equal");
             }
-            if (name.equals(usersModal.getName())) {
+            if (name.equals(property.getProperty("name"))) {
                 log.info("Names are equal");
             } else {
-                log.info("Names are not equal");
+                log.error("Names are not equal");
             }
-            if (username.equals(usersModal.getUsername())) {
+            if (username.equals(property.getProperty("username"))) {
                 log.info("User names are equal");
             } else {
-                log.info("User names are not equal");
+                log.error("User names are not equal");
             }
-            if (email.equals(usersModal.getEmail())) {
+            if (email.equals(property.getProperty("email"))) {
                 log.info("Emails are equal");
             } else {
-                log.info("Emails are not equal");
+                log.error("Emails are not equal");
             }
-            if (street.equals(usersModal.getStreet())) {
+            if (street.equals(property.getProperty("street"))) {
                 log.info("Streets are equal");
             } else {
-                log.info("Streets are not equal");
+                log.error("Streets are not equal");
             }
-            if (suite.equals(usersModal.getSuite())) {
+            if (suite.equals(property.getProperty("suite"))) {
                 log.info("Suits are equal");
             } else {
-                log.info("Suits are not equal");
+                log.error("Suits are not equal");
             }
-            if (city.equals(usersModal.getCity())) {
+            if (city.equals(property.getProperty("city"))) {
                 log.info("Cities are equal");
             } else {
-                log.info("Cities are not equal");
+                log.error("Cities are not equal");
             }
-            if (zipcode.equals(usersModal.getZipcode())) {
+            if (zipcode.equals(property.getProperty("zipcode"))) {
                 log.info("Zipcodes are equal");
             } else {
-                log.info("Zipcodes are not equal");
+                log.error("Zipcodes are not equal");
             }
-            if (lat == usersModal.getLat()) {
+            if (lat.equals(property.getProperty("lat"))) {
                 log.info("Latitude is equal");
             } else {
-                log.info("Latitude is not equal");
+                log.error("Latitude is not equal");
             }
-            if (lng == usersModal.getLng()) {
+            if (lng.equals(property.getProperty("lng"))) {
                 log.info("Longitude is equal");
             } else {
-                log.info("Longitude is not equal");
+                log.error("Longitude is not equal");
             }
-            if (phone.equals(usersModal.getPhone())) {
+            if (phone.equals(property.getProperty("phone"))) {
                 log.info("Phones are equal");
             } else {
-                log.info("Phones are not equal");
+                log.error("Phones are not equal");
             }
-            if (website.equals(usersModal.getWebsite())) {
+            if (website.equals(property.getProperty("website"))) {
                 log.info("Websites are equal");
             } else {
-                log.info("Websites are not equal");
+                log.error("Websites are not equal");
             }
-            if (companyName.equals(usersModal.getCompanyName())) {
+            if (companyName.equals(property.getProperty("companyName"))) {
 
                 log.info("Company names are equal");
             } else {
-                log.info("Company names are not equal");
+                log.error("Company names are not equal");
             }
-            if (catchPhrase.equals(usersModal.getCatchPhrase())) {
+            if (catchPhrase.equals(property.getProperty("catchPhrase"))) {
                 log.info("Catch phrases are equal");
             } else {
-                log.info("Catch phrases are not equal");
+                log.error("Catch phrases are not equal");
             }
-            if (bs.equals(usersModal.getBs())) {
+            if (bs.equals(property.getProperty("bs"))) {
                 log.info("Bs are equal");
             } else {
-                log.info("Catch phrases are not equal");
+                log.error("Catch phrases are not equal");
+
             }
         } else {
             String response = get(endUri, id, getIntProperty("status404"));
