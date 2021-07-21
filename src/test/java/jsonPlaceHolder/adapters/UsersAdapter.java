@@ -244,7 +244,6 @@ public class UsersAdapter extends BaseAdapter {
                 log.info("Bs are equal");
             } else {
                 log.error("Catch phrases are not equal");
-
             }
         } else {
             String response = get(endUri, id, getIntProperty("status404"));

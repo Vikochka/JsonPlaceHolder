@@ -10,7 +10,6 @@ import jsonPlaceHolder.modals.PostsModal;
 import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
 
-import java.io.IOException;
 
 import static com.google.gson.JsonParser.parseString;
 import static framework.PropertyReader.getIntProperty;
@@ -20,6 +19,7 @@ public class PostsAdapter extends BaseAdapter {
     private int count;
     int id;
     PropertyReader propertyReader = new PropertyReader("posts.properties");
+
     @Step("Create new post")
     public JsonObject postPost(PostsModal postsModal, String uri, int status) {
         String response = post(gson.toJson(postsModal), uri, status);
@@ -71,7 +71,7 @@ public class PostsAdapter extends BaseAdapter {
     }
 
     @Step("Get one post")
-    public void getPost(String endUri, int id,int status) {
+    public void getPost(String endUri, int id, int status) {
         String response2 = get(endUri, getIntProperty("status200"));
         JsonArray jsonArray = (JsonArray) jsonParser.parse(response2);
         count = jsonArray.size();
@@ -115,6 +115,6 @@ public class PostsAdapter extends BaseAdapter {
             }
             log.info("Post can not be found");
         }
-            Allure.addAttachment("Actual result", get(endUri, id, status));
+        Allure.addAttachment("Actual result", get(endUri, id, status));
     }
 }
