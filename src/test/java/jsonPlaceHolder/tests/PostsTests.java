@@ -1,9 +1,11 @@
 package jsonPlaceHolder.tests;
 
 import com.github.javafaker.Faker;
+import framework.TestListener;
 import jsonPlaceHolder.adapters.PostsAdapter;
 import jsonPlaceHolder.modals.PostsModal;
 import lombok.SneakyThrows;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import static framework.BaseAdapter.getBytes;
@@ -11,6 +13,7 @@ import static framework.BaseAdapter.getBytesAnnotationWithArgs;
 import static framework.PropertyReader.getIntProperty;
 import static framework.PropertyReader.getProperty;
 
+@Listeners(TestListener.class)
 public class PostsTests {
 
     @SneakyThrows

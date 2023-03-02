@@ -105,7 +105,7 @@ public class Browser {
     }
 
 
-    public WebDriver getDriver() {
+    public  static WebDriver getDriver() {
         return driver;
     }
 

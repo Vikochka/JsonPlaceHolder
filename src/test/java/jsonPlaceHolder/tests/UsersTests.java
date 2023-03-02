@@ -1,13 +1,15 @@
 package jsonPlaceHolder.tests;
 
+import framework.TestListener;
 import jsonPlaceHolder.adapters.UsersAdapter;
 import lombok.SneakyThrows;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import static framework.BaseAdapter.getBytesAnnotationWithArgs;
 import static framework.PropertyReader.getIntProperty;
 import static framework.PropertyReader.getProperty;
-
+@Listeners(TestListener.class)
 public class UsersTests {
 
     @SneakyThrows
